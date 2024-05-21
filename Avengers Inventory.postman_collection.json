@@ -31,7 +31,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/inventories/1",
+					"raw": "http://localhost:8080/inventories/13",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -39,7 +39,7 @@
 					"port": "8080",
 					"path": [
 						"inventories",
-						"1"
+						"13"
 					]
 				}
 			},
@@ -52,7 +52,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n\t\"Name\": \"Captain Marvel's Suit\",\n    \"ItemCode\": \"CMSU-001\",\n    \"Stock\": 5,\n    \"Description\": \"Suit worn by Captain Marvel, providing enhanced durability and flight capability\",\n    \"Status\": \"active\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/inventories",
@@ -73,8 +73,12 @@
 			"request": {
 				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Name\": \"Captain Marvel's Suit\",\n    \"ItemCode\": \"CMSU-001\",\n    \"Stock\": 3,\n    \"Description\": \"Suit worn by Captain Marvel, providing enhanced durability and flight capability\",\n    \"Status\": \"active\"\n}"
+				},
 				"url": {
-					"raw": "http://localhost:8080/inventories/11",
+					"raw": "http://localhost:8080/inventories/13",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -82,7 +86,7 @@
 					"port": "8080",
 					"path": [
 						"inventories",
-						"11"
+						"13"
 					]
 				}
 			},
@@ -94,7 +98,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/inventories/11",
+					"raw": "http://localhost:8080/inventories/12",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -102,7 +106,7 @@
 					"port": "8080",
 					"path": [
 						"inventories",
-						"11"
+						"12"
 					]
 				}
 			},

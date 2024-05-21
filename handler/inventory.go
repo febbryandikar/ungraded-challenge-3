@@ -59,16 +59,15 @@ func (h *NewInventoryHandler) GetInventoryById(w http.ResponseWriter, r *http.Re
 }
 
 func (h *NewInventoryHandler) AddNewInventory(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	newInventory := entity.Inventory{
-		Name: "Captain Marvel's Suit",
-    	ItemCode: "CMSU-001",
-    	Stock: 5,
-    	Description: "Suit worn by Captain Marvel, providing enhanced durability and flight capability",
-    	Status: "active",
-	}
+	var newInventory entity.Inventory
+
+	err := json.NewDecoder(r.Body).Decode(&newInventory)
+	if err!= nil {
+        log.Fatal(err)
+    }
 
 	query := "INSERT INTO inventory (item_name, item_code, stock, description, status) VALUES (?, ?, ?, ?, ?)"
-	_, err := h.Exec(query, newInventory.Name, newInventory.ItemCode, newInventory.Stock, newInventory.Description, newInventory.Status)
+	_, err = h.Exec(query, newInventory.Name, newInventory.ItemCode, newInventory.Stock, newInventory.Description, newInventory.Status)
 	if err!= nil {
 		log.Fatal(err)
 	}
@@ -85,21 +84,13 @@ func (h *NewInventoryHandler) UpdateInventory(w http.ResponseWriter, r *http.Req
 	var inventory entity.Inventory
 	paramsId := p.ByName("id")
 
-	query := "SELECT id, item_name, item_code, stock, description, status FROM inventory WHERE id = ?"
-	if err := h.QueryRow(query, paramsId).Scan(&inventory.ID, &inventory.Name, &inventory.ItemCode, &inventory.Stock, &inventory.Description, &inventory.Status); err!= nil {
-		log.Fatal(err)
-	}
+	err := json.NewDecoder(r.Body).Decode(&inventory)
+	if err!= nil {
+        log.Fatal(err)
+    }
 
-	newInventory := entity.Inventory{
-		Name: "Captain Marvel's Suit",
-    	ItemCode: "CMSU-001",
-    	Stock: 3,
-    	Description: "Suit worn by Captain Marvel, providing enhanced durability and flight capability",
-    	Status: "active",
-	}
-
-	query = "UPDATE inventory SET item_name = ?, item_code = ?, stock = ?, description = ?, status = ? WHERE id =?"
-	_, err := h.Exec(query, newInventory.Name, newInventory.ItemCode, newInventory.Stock, newInventory.Description, newInventory.Status, inventory.ID)
+	query := "UPDATE inventory SET item_name = ?, item_code = ?, stock = ?, description = ?, status = ? WHERE id =?"
+	_, err = h.Exec(query, inventory.Name, inventory.ItemCode, inventory.Stock, inventory.Description, inventory.Status, paramsId)
 	if err!= nil {
 		log.Fatal(err)
 	}
